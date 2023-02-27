@@ -19,5 +19,3 @@ It is set up for development. Actual deployment is out of scope.
 
 (versions)
 
-
-

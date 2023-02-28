@@ -7,7 +7,7 @@ defmodule FriendlyWeb.Router do
 
   scope "/", FriendlyWeb do
     pipe_through :api
-    get "/", Scores, :two_above_minimum
+    get "/", ScoresController, :qualifying_two_users
   end
 
   if Application.compile_env(:friendly, :dev_routes) do

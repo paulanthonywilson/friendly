@@ -40,6 +40,7 @@ defmodule Friendly.MixProject do
       # Application deps
       {:credo, "~> 1.6", only: [:dev, :test]},
       {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false},
+      {:mox, "~> 1.0", only: :test},
       {:recon, "~> 2.5"}
     ]
   end

@@ -14,9 +14,11 @@ defmodule Friendly.PointsManager do
   """
   use GenServer
 
-  alias Friendly.Points
+  alias Friendly.{Points, Queries.UsersQueryResult}
 
   import Friendly.RandomFloor, only: [random_floor: 0]
+
+  @behaviour Friendly.Queries
 
   @name __MODULE__
 
@@ -31,36 +33,12 @@ defmodule Friendly.PointsManager do
           refresh_every: pos_integer()
         }
 
-  defmodule UsersQueryResult do
-    @moduledoc false
-    keys = [:previous_query_timestamp, :qualifying_users]
-    @enforce_keys keys
-    defstruct keys
-
-    @type t :: %__MODULE__{
-            previous_query_timestamp: DateTime.t(),
-            qualifying_users: list(Points.User.t())
-          }
-  end
-
   def start_link(_) do
     GenServer.start_link(__MODULE__, [], name: @name)
   end
 
-  @doc """
-  Returns up to two users with points over the current floor value. The floor value
-  is updated every minute (and is not exposed).
-
-  As specified in the exercise this is implemented with a GenServer call to the
-  same process that is responsible for updating all the users, each with a new random
-  points score.
-
-  The update operation takes just over 5 seconds on a M2 Macbook Pro. If this query
-  coincides with an update it could take a few seconds to complete (depending on hardware /
-  network to a remote db). The timeout is currently set at 30 seconds.
-  """
-  @spec up_to_two_users_with_points_over_floor :: UsersQueryResult.t()
-  def up_to_two_users_with_points_over_floor do
+  @impl Friendly.Queries
+  def max_two_qualifying_users do
     GenServer.call(@name, :users_with_points_over, @call_timeout)
   end
 

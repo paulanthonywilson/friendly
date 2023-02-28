@@ -21,11 +21,9 @@ defmodule Friendly.PointsManagerTest do
     end
 
     test "timestamp included in result" do
-      assert %{previous_query_timestamp: nil} =
-               PointsManager.up_to_two_users_with_points_over_floor()
+      assert %{previous_query_timestamp: nil} = PointsManager.max_two_qualifying_users()
 
-      assert %{previous_query_timestamp: %DateTime{}} =
-               PointsManager.up_to_two_users_with_points_over_floor()
+      assert %{previous_query_timestamp: %DateTime{}} = PointsManager.max_two_qualifying_users()
     end
 
     test "floor is initialised" do
@@ -35,11 +33,11 @@ defmodule Friendly.PointsManagerTest do
 
     test "filters by points above the floor" do
       change_qualifying_floor(3)
-      assert %{qualifying_users: users} = PointsManager.up_to_two_users_with_points_over_floor()
+      assert %{qualifying_users: users} = PointsManager.max_two_qualifying_users()
       assert [4, 5] = users |> Enum.map(&Map.get(&1, :points)) |> Enum.sort()
 
       change_qualifying_floor(4)
-      assert %{qualifying_users: users} = PointsManager.up_to_two_users_with_points_over_floor()
+      assert %{qualifying_users: users} = PointsManager.max_two_qualifying_users()
       assert [5] = users |> Enum.map(&Map.get(&1, :points)) |> Enum.sort()
     end
   end

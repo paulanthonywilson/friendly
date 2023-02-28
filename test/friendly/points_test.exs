@@ -1,16 +1,15 @@
 defmodule Friendly.PointsTest do
-  use Friendly.DataCase
+  use Friendly.DataCase, async: true
 
+  import Ecto.Query
   alias Fixtures.UserFixtures
-  alias Friendly.{Points, Points.User}
+  alias Friendly.{Points, Points.User, Repo}
 
   describe "users with points over" do
     setup do
       UserFixtures.create_user!(1)
 
-      for points <- 5..1 do
-        UserFixtures.create_user!(points)
-      end
+      for points <- 5..1, do: UserFixtures.create_user!(points)
 
       :ok
     end
@@ -38,5 +37,32 @@ defmodule Friendly.PointsTest do
     test "limit defaults to 2" do
       assert [%User{}, %User{}] = Points.users_with_points_over(0)
     end
+  end
+
+  describe "randomly updating all the users" do
+    setup do
+      for _ <- 1..1_000, do: UserFixtures.create_user!()
+      :ok
+    end
+
+    test "returns ok tuple with the number of users updated" do
+      assert {:ok, 1_000} = Points.randomly_update_all_points()
+
+      from(u in User, limit: 1) |> Repo.one() |> Repo.delete!()
+
+      assert {:ok, 999} = Points.randomly_update_all_points()
+    end
+
+    test "updates to random numbers between 0 and the max values (inclusive)" do
+      {:ok, 1_000} = Points.randomly_update_all_points(2)
+      assert [0, 1, 2] == all_distinct_points()
+
+      {:ok, 1_000} = Points.randomly_update_all_points(1)
+      assert [0, 1] == all_distinct_points()
+    end
+  end
+
+  defp all_distinct_points do
+    Repo.all(from u in User, select: u.points, distinct: true, order_by: [asc: u.points])
   end
 end

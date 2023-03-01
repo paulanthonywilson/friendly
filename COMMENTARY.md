@@ -8,6 +8,8 @@ The requirements state that every minute the `GenServer` "should update every us
 
 The example JSON is given as "something like". I have assumed that means I have permission to change the JSON key values to be a bit more meaningful.
 
+In the specification I have taken the phrases "[0..100]", and 0 to 100, to be inclusive. That is both 0 and 100 are included in the range.
+
 ## Design considerations
 
 ## Naming

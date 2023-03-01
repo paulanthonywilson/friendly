@@ -3,6 +3,8 @@ defmodule Friendly.Application do
 
   use Application
 
+  # We are not starting the points manager in the test environment to give
+  # us the flexibility to test in isolation.
   @env_children (if Mix.env() == :test do
                    []
                  else

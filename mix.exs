@@ -9,7 +9,8 @@ defmodule Friendly.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      docs: docs()
     ]
   end
 
@@ -41,6 +42,7 @@ defmodule Friendly.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test]},
       {:dialyxir, "~> 1.2", only: [:dev, :test], runtime: false},
       {:mox, "~> 1.0", only: :test},
+      {:ex_doc, "~> 0.29.1", only: :dev},
       {:recon, "~> 2.5"}
     ]
   end
@@ -52,5 +54,9 @@ defmodule Friendly.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
+  end
+
+  defp docs do
+    [main: "readme", extras: ["README.md", "commentry.md"]]
   end
 end

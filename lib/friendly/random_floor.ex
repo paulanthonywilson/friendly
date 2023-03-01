@@ -4,6 +4,8 @@ defmodule Friendly.RandomFloor do
   users with points above a particular value
   """
 
+  @doc "See moodule doc"
+  @spec random_floor :: non_neg_integer
   def random_floor do
     :rand.uniform(101) - 1
   end

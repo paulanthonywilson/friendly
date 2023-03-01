@@ -1,5 +1,5 @@
 defmodule FriendlyWeb.ScoresControllerTest do
-  use FriendlyWeb.ConnCase
+  use FriendlyWeb.ConnCase, async: true
 
   alias Friendly.Points.User
   alias Friendly.Queries.UsersQueryResult

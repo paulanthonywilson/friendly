@@ -1,13 +1,16 @@
 defmodule Friendly.Queries do
   @moduledoc """
-  Behaviour for providing a testing steam between the web (api) layer and the domain layer.
+  Behaviour for providing a testing steam between the web (api) layer and the domain layer for querying
+  two users that qualify by having points above the arbitrary floor.
 
   For convenience `use Friendly.Queries` will alias `Queries` as
 
   * `MockFriendlyQueries` if the `Mix.env()` is test (and Mix.target() is not `elixir_ls`)
   * `Friendly.Queries` otherwise
 
-  This approach is a little controversial. The advantage is better compiler and dialyzer warnings if you accidentally do the wrong thing.
+  This approach is a little controversial. The advantage is better compiler and dialyzer warnings if you accidentally do the wrong thing;
+  other approaches do not tell the compiler anything except that the code is calling a function on some atom that hopefully is
+  representing a module. The disadvantages are that everyone hates a macro and that it is non-standard.
 
   (Note that if you have to set the `elixir_ls` target youself in the `elixir_ls` settings in VSCode etc...)
   """

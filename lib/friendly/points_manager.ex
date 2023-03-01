@@ -9,8 +9,8 @@ defmodule Friendly.PointsManager do
   * All users points are updated to be a random value between 0 and 100 inclusive.
 
 
-  Not specified, but assumed here, is that the first randomisation of users does not take place until a minute
-  after the GenServer is intialised
+  The first randomisation of users does not take place until a minute after the GenServer is intialised; this is
+  not specified in the
   """
   use GenServer
 

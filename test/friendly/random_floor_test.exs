@@ -1,39 +1,39 @@
 defmodule Friendly.RandomFloorTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   alias Friendly.RandomFloor
   @max_attempts 100_000_000
 
   test "random floor is between 0 and 100, inclusive" do
     # Property like test
 
-    acc =
+    memo =
       Enum.reduce_while(
         1..@max_attempts,
-        %{zero_encountered?: false, hundred_encountered?: false},
-        fn _, acc ->
-          acc =
+        %{zero_generated?: false, hundred_generated?: false, mid_val_generated?: false, count: 0},
+        fn _, memo ->
+          memo =
             case RandomFloor.random_floor() do
               0 ->
-                %{acc | zero_encountered?: true}
+                %{memo | zero_generated?: true}
 
               100 ->
-                %{acc | hundred_encountered?: true}
+                %{memo | hundred_generated?: true}
 
               val ->
-                assert val > 0
-                assert val < 100
-                acc
+                assert val in 1..99
+                %{memo | mid_val_generated?: true}
             end
 
-          if acc.zero_encountered? && acc.hundred_encountered? do
-            {:halt, acc}
+          if memo.zero_generated? && memo.hundred_generated? && memo.mid_val_generated? do
+            {:halt, memo}
           else
-            {:cont, acc}
+            {:cont, memo}
           end
         end
       )
 
-    assert acc.hundred_encountered?
-    assert acc.zero_encountered?
+    assert memo.hundred_generated?
+    assert memo.zero_generated?
+    assert memo.mid_val_generated?
   end
 end

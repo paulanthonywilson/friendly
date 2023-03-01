@@ -41,24 +41,41 @@ defmodule Friendly.PointsTest do
 
   describe "randomly updating all the users" do
     setup do
-      for _ <- 1..1_000, do: UserFixtures.create_user!()
+      for _ <- 1..600, do: UserFixtures.create_user!()
       :ok
     end
 
     test "returns ok tuple with the number of users updated" do
-      assert {:ok, 1_000} = Points.randomly_update_all_points()
+      assert {:ok, 600} = Points.randomly_update_all_points()
 
       from(u in User, limit: 1) |> Repo.one() |> Repo.delete!()
 
-      assert {:ok, 999} = Points.randomly_update_all_points()
+      assert {:ok, 599} = Points.randomly_update_all_points()
     end
 
     test "updates to random numbers between 0 and the max values (inclusive)" do
-      {:ok, 1_000} = Points.randomly_update_all_points(2)
-      assert [0, 1, 2] == all_distinct_points()
+      check_distinct_points([0, 1, 2], 2)
+      check_distinct_points([0, 1], 1)
+    end
+  end
 
-      {:ok, 1_000} = Points.randomly_update_all_points(1)
-      assert [0, 1] == all_distinct_points()
+  # Even with 600 users, I think there is a 1 in 200 chance of
+  # any score not being a 0, 1, or 2 which might make the update
+  # test flaky if run often enough in a busy CI environment.
+  # This makes it much less likely (1 in 20,000).
+  defp check_distinct_points(expected, max_value, count \\ 100)
+
+  defp check_distinct_points(expected, max_value, 0) do
+    # Ok, one more shot
+    {:ok, _} = Points.randomly_update_all_points(max_value)
+    assert expected == all_distinct_points()
+  end
+
+  defp check_distinct_points(expected, max_value, count) do
+    {:ok, _} = Points.randomly_update_all_points(max_value)
+
+    unless expected == all_distinct_points() do
+      check_distinct_points(expected, max_value, count - 1)
     end
   end
 

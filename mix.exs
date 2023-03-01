@@ -57,6 +57,6 @@ defmodule Friendly.MixProject do
   end
 
   defp docs do
-    [main: "readme", extras: ["README.md", "COMMENTRY.md"]]
+    [main: "readme", extras: ["README.md", "COMMENTARY.md"]]
   end
 end

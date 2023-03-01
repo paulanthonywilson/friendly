@@ -16,7 +16,7 @@ defmodule Friendly.Queries do
   """
 
   defmodule UsersQueryResult do
-    @moduledoc false
+    @moduledoc "Result returned by `Queries.max_two_qualifying_users/0`"
     keys = [:previous_query_timestamp, :qualifying_users]
     @enforce_keys keys
     defstruct keys

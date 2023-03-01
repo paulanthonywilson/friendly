@@ -1,4 +1,4 @@
-# Commentry
+# Commentary
 
 ## Assumptions
 

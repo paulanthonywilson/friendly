@@ -14,7 +14,7 @@ Briefly though:
 
 It is set up for development. Actual deployment is out of scope.
 
-I have provided some commentry on the design, and "exercise specification" in `./COMMENTRY.md`. 
+I have provided some commentary on the design, and "exercise specification" in `./COMMENTARY.md`. 
 
 
 # Getting started for running in development

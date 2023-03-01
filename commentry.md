@@ -15,7 +15,7 @@ The example JSON is given as "something like". I have assumed that means I have 
 I have taken the naming in exercise "requirements" as a suggestion, as the wording implies. I have renamed the following
 
 * `min_level` to `qualifying_points_floor`. _Min_ implies to me that values should be greater _or equal_ to this level but the specification states that returned users' points should be above this level. Things tend to be above a floor.
-* `timestamp` to `previous_query_timestamp`, clarifies what it is a timestamp of.
+* `timestamp` to `previous_query_timestamp`, clarifies the nature of the timestamp
 
 ### Big atomic update
 

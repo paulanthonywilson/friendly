@@ -14,12 +14,12 @@ Briefly though:
 
 It is set up for development. Actual deployment is out of scope.
 
-I have provided some commentry on the design, and "exercise specification" `./commentry.md`. 
+I have provided some commentry on the design, and "exercise specification" in `./COMMENTRY.md`. 
 
 
 # Getting started for running in development
 
-Obviously, first clone [this repo from Github](https://github.com/paulanthonywilson/friendly) and cd into the directory.
+First clone [this repo from Github](https://github.com/paulanthonywilson/friendly) and cd into the directory.
 
 ```sh
 git clone git@github.com:paulanthonywilson/friendly.git
@@ -31,8 +31,6 @@ You will need installed Erlang, Elixir, and Postgresql to be installed.
 
 Elixir and Erlang versions are set in `.tool-versions`. As you are probably using [`asdf`](https://asdf-vm.com) you may need to `asdf install` or edit the `tool-versions` file. If you do run
 with different Elixir or Erlang version and get warnings or errors, then that's on you though 😜.
-
-This was
 
 
 ## Setup
@@ -82,7 +80,7 @@ If you like, you can run `mix docs` and read this and other documentation at `do
 
 # Running
 
-Run with `iex -S mix phx.server` (or `mix phx.server` if that's your thing). The server listens on `localhost` (127.0.0.1), port 4000. You can navigate to http://localhost:4000 in your browser to see the returned JSON. (Aesthetes may prefer to `curl localhost:4000; jq`.) 
+Run with `iex -S mix phx.server` (or `mix phx.server` if that's your thing). The server listens on `localhost` (127.0.0.1), port 4000. You can navigate to http://localhost:4000 in your browser to see the returned JSON. (Aesthetes may prefer to `curl localhost:4000 | jq`.) 
 
 If you query for the first time **after freshly seeding**, and within one minute of startup your result json will be like
 
